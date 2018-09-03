@@ -1,19 +1,47 @@
-Cantidad | Secuencial | OMP   | GPU   | GPU-QuickSort |
-1000       0.196        0.210   6.604    3.555
-5000       1.202        1.335   21.032   6.226
-10000      2.391        2.524   50.437   9.962
-50000      12.236       13.202  512.583  12.248
-100000     28.779       27.818  1600,03  19.947 16-8
-500000     143.603      93.471   -----   37.349 32-16
-1000000    304.991      203.211  -----   46.617 64-32
-5000000    1698.34      1122.590 -----   88.937 128-64 
-10000000   3683.713     2473.136 -----   158.088 128-64 
-50000000   20287.507    13316.552 ----   401.351 128-64
-100000000  41183.724    32087.728 ----   878.485 128-64
-500000000  224981.828   148800.042 ---   3803.709 128-64
-1000000000 467772.651   291855.056 ---   7313.001 256-128
+Objetivo:
+El siguiente informe es un trabajo final correspondiente al curso Arquitecturas avanzadas de c\'omputo dictado durante la escuela de ciencias inform\'aticas en la uba en el 2018, cuyo objetivo es realizar una comparaci\'on entre los tiempos de ejecuci\'on de un algoritmo de ordenamiento implementado sobre distintas arquitecturas y tratando de aprovechar al m\'aximo la paralelizaci\'on de tareas.\\ 
 
-c(1000,5000,10000,50000,100000,500000,1000000,5000000,10000000,50000000,100000000,500000000,1000000000)
-c(0.196,1.202,2.391,12.236,28.779,143.603,304.991,1698.34,3683.713,20287.507,41183.724,224981.828,467772.651)
-c(0.210,1.335,2.524,13.202,27.818,93.471,203.211,1122.590,2473.136,13316.552,32087.728,148800.042,291855.056)
-c(3.555,6.226,9.962,12.248,19.947,37.349,46.617,88.937,158.088,401.351,878.485,3803.709,7313.001)
+Introducci\'on:
+Existen un conjunto de distintas arquitecturas que fueron creadas para resolver tareas espec\'ificas, pero actualmente pueden llegar a ser \'utiles para la resoluci\'on de problemas de cualquier \'indole. Dichos problemas, dependiendo de la cantidad de operaciones que realizan, pueden llegar a tardar un tiempo prolongado para su resoluci\'on. Sin embargo, en algunos casos estos tiempos pueden ser ampliamente mejorados con la programaci\'on en paralelo. Existen diferentes formas de ejecutar programas en paralelo y la mayor\'ia depende del hardware que se utiliza.\\
+En un comienzo la programaci\'on en paralelo era simulada debido al alto costo del hardware, pero aun as\'i se obten\'ian mejores resultados. Hoy en dia, en la mayor\'ia de los dispositivos inform\'aticos que utilizamos cotidianamente es habitual que posean un procesador multin\'ucleo, que combina dos o m\'as microprocesadores en un solo circuito integrado, lo que permite que el programador cuente con una forma de paralelismo real a nivel de threads. Para facilitar al programador hacer uso de esta ventaja se desarrollaron distintas interfaces de programaci\'on como OpenMP que permite añadir concurrencia a programas desarrollados en C,C++ y Fortran.\\ 
+Otra arquitectura interesante son las unidades de procesamiento gr\'afico o GPU, que son dispositivos desarrollados para el procesamiento de gr\'aficos u operaciones de punto flotante que cuentan con una gran cantidad de n\'ucleos. Con el tiempo, estos dispositivos empezaron a ser utilizados para el c\'alculo cient\'ifico de prop\'osito general (en ingl\'es GPGPU - General-Purpose Computing on Graphics Processing Units) dado que de esta forma muchas aplicaciones mejoraron enormemente sus tiempos de ejecuci\'on. Por estos motivos, empresas como NVIDIA introdujeron en sus tarjetas gr\'aficas la arquitectura CUDA para el c\'alculo paralelo de prop\'osito general.\\ 
+
+Algoritmo:
+En este informe se decidi\'o utilizar el algoritmo de ordenamiento Quicksort y comparar sus tiempos de ejecuci\'on de distintas implementaciones que buscan explotar las ventajas de diferentes arquitecturas.\\ 
+El algoritmo quicksort es uno de los algoritmos de ordenamiento m\'as eficientes y funciona de la siguiente forma:\\ 
+- Elige un valor del arreglo al cual llamaremos pivote.
+- Resitua a los dem\'as elementos de la lista a cada lado del pivote, insertando a todos los elementos menores que el pivote del lado izquierdo y a los mayores del lado derecho.
+- De esta forma, las lista inicial queda separada en dos sublistas, una con los elementos menores que el pivote y otra con los elementos mayores por lo cual pueden ser ordenadas de forma independientes. Notar que el pivote se encuentra en su posici\'on correspondiente respecto del arreglo ordenado.
+- El algoritmo repite el proceso de forma recursiva para cada sublista mientras \'estas contengan m\'as de un elemento. Una vez terminado el proceso el arreglo est\'a ordenado.
+Este algoritmo fue creado por el cient\'ifico brit\'anico Tony Hoare, quien sugiri\'o que cuando la lista de n\'umeros a ordenar no es demasiado grande es mejor utilizar otro algoritmo.\\ 
+La programaci\'on en paralelo consiste en dividir un problema en subproblemas(lo m\'as independientes posibles), con el fin de optimizar el tiempo de ejecuci\'on del programa. Esto es exactamente lo que hace el algoritmo quicksort y es lo que se trat\'o de explotar en las distintas implementaciones para reducir el tiempo de ejecuci\'on.\\ 
+
+Experimentos:
+Los programas utilizados est\'an disponibles en un repositorio de Github y fueron ejecutados en una m\'aquina con las siguientes caracter\'isticas:\\ 
+CARACTERISTICAS DE LA CPU\\ 
+CARACTERISTICAS DE LA GPU\\ 
+Para obtener estos resultados se fueron modificando las macros de los programas para establecer el n\'umero de elementos a ordenar, la cantidad de hilos y otros valores para tratar de sacar el mayor provecho al algoritmo.\\ 
+\\ 
+Cantidad | Secuencial | OMP | GPU-QuickSort |\\ 
+1000 & 0.196 & 0.210 & 3.555 \\ \hline
+5000 & 1.202 & 1.335 & 6.226 \\ \hline 
+10000 & 2.391 & 2.524 & 9.962 \\ \hline 
+50000 & 12.236 & 13.202 & 12.248 \\ \hline 
+100000 & 28.779 & 27.818 & 19.947 16-8 \\ \hline 
+500000 & 143.603 & 93.471 & 37.349 32-16 \\ \hline 
+1000000 & 304.991 & 203.211 & 46.617 64-32 \\ \hline 
+5000000 & 1698.34 & 1122.590 & 88.937 128-64 \\ \hline 
+10000000 & 3683.713 & 2473.136 & 158.088 128-64 \\ \hline 
+50000000 & 20287.507 & 13316.552 & 401.351 128-64 \\ \hline 
+100000000 & 41183.724 & 32087.728 & 878.485 128-64 \\ \hline 
+500000000 & 224981.828 & 148800.042 & 3803.709 128-64 \\ \hline 
+1000000000 & 467772.651 & 291855.056 & 7313.001 256-128 \\ \hline 
+\\ 
+Tener en cuenta que los arreglos fueron creados con n\'umeros pseudo-aleatorios y no sobre alguna distribuci\'on en particular.\\ 
+
+Conclusi\'on:
+Como se observa en los experimentos cada implementaci\'on hace mejor o peor tiempo dependiendo del n\'umero de elementos que posea el arreglo.\\ 
+Si la cantidad de elementos es pequeña (menos de 100000), ser\'ia conveniente utilizar la versi\'on secuencial del algoritmo sin ninguna optimizaci\'on en cuanto a la paralelizaci\'on pues el algoritmo corre lo suficientemente r\'apido y no pierde tiempo en la creaci\'on de nuevos hilos.\\ 
+Si la cantidad de elementos pasa a ser un poco m\'as grande (entre 500000 y 5000000) es \'util utilizar varios n\'ucleos del procesador para ejecutar varios hilos y paralelizar la operaciones.\\ 
+Sin embargo, a si la cantidad de n\'umeros es muy grande la mejor opci\'on es la implementaci\'on GPU del algoritmo. Esta \'ultima versi\'on es varias veces mas rapida que la anterior, si bien en un principio se puede pensar que esto es debido a la superioridad del dispositivo GPU con respecto a la CPU sobre la cual se llevaron a cabo los experimentos. No obstante, si bien esto puede llegar a influir en los experimentos no se puede negar la amplia mejora en los tiempo de ejecuci\'on del algoritmo.\\ 
+
