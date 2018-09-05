@@ -14,9 +14,7 @@ compile:
 	@gcc -Wall -o Sort_secuencial Sort_secuencial.c -lm -g -fopenmp	
 	@echo "Sort_secuencial creado..."		
 	@gcc -Wall -o Sort_paralelo Sort_paralelo.c -lm -g -fopenmp
-	@echo "Sort_paralelo creado..."		
-	@nvcc -arch=sm_35 -rdc=true -lcudadevrt -I /usr/local/cuda-9.2/samples/common/inc -o Sort_cuda_simple Sort_cuda_simple.cu
-	@echo "Sort_cuda_simple creado..."	
+	@echo "Sort_paralelo creado..."	
 	@nvcc -o GPU-Quicksort GPU-Quicksort.cu
 	@echo "GPU-Quicksort creado..."		
 	@echo "Compilacion completa."	
