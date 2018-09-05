@@ -5,7 +5,7 @@
 #include <sys/sysinfo.h>
 #include <time.h>
 #include <unistd.h>
-#define N 30000000
+#define N 100000
 #define M 50000
 
 int partition(int *v, int b, int t){
