@@ -2,13 +2,13 @@ run: clean compile
 	@clear
 	@echo "Ejecutando programas..."
 	@echo "Secuencial"
-	@./Quicksort
+	@./Quicksort 10000000
 	@echo "Posix Threads"
-	@./Quicksort_Pthreads
+	@./Quicksort_Pthreads 10000000
 	@echo "OpenMP"
-	@./Quicksort_OpenMP
+	@./Quicksort_OpenMP 10000000
 	@echo "GPU-Quicksort"
-	@./GPU-Quicksort
+	@./GPU-Quicksort 10000000
 
 compile:
 	@clear

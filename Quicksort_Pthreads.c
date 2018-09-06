@@ -74,19 +74,22 @@ void *Quicksort(void *p){
     return NULL;
 }
 
-int main(void){
-    
+int main(int argc, char *argv[]){
+	
+	if(argc!=2)return 0;
+	const int MAXN = atoi(argv[1]);
+	srand(time(0)^(getpid()));
+
     int *a,i;
-    srand(time(0)^(getpid()));
     a = (int*)malloc(N*sizeof(int));
-    for(i=0;i<N;i++)a[i]=random()%N+1;
-    qsparams params = mkqsparams(a,0,N-1,1);//Inicializo los parametros de la funcion
+    for(i=0;i<MAXN;i++)a[i]=random()%MAXN+1;
+    qsparams params = mkqsparams(a,0,MAXN-1,1);//Inicializo los parametros de la funcion
     
     double times=omp_get_wtime();//Guardo el tiempo en el que empieza a ejecutarse el algoritmo
     Quicksort((void *)&params);
     times = omp_get_wtime()-times;//Calculo la diferencia
     printf("Tiempo : %f ms.\n",times*1000);
-    
+    for(i=0;i<MAXN-1;i++)if(a[i]>a[i+1])puts("Error");
     free(a);
     
     return 0;

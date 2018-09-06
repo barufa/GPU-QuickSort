@@ -59,17 +59,21 @@ void Quicksort(int* v, int b, int t){
 	return;
 }
 
-int main(void){
+int main(int argc, char *argv[]){
+	
+	if(argc!=2)return 0;
+	const int MAXN = atoi(argv[1]);
+	srand(time(0)^(getpid()));
+	
     int *a,i;
-    srand(time(0)^(getpid()));
-    a = malloc(N*sizeof(int));
-    for(i=0;i<N;i++)a[i]=rand()%N+1;
+    a = malloc(MAXN*sizeof(int));
+    for(i=0;i<MAXN;i++)a[i]=rand()%MAXN+1;
     
     double t=omp_get_wtime();//Inicializo la variable t para medir el tiempo de ejecucion
-    Quicksort(a,0,N-1);//Lo ordeno
+    Quicksort(a,0,MAXN-1);//Lo ordeno
     t = omp_get_wtime()-t;//Calculo la diferencia
     printf("Tiempo : %f ms.\n",t*1000);
-    
+    for(i=0;i<MAXN-1;i++)if(a[i]>a[i+1])puts("Error");
     free(a);
     
     return 0;
