@@ -72,7 +72,7 @@ __global__ void gqsort1(block * blocks,int * d,int * LT,int * GT){
 	
 	for(int j=start+th;j<end;j+=cth){
 		if(d[j]<pivot)lt++;
-		if(d[j]>pivot)gt++;
+		else if(d[j]>pivot)gt++;
 	}
 	
 	atomicAdd(&LT[id],lt);
