@@ -230,7 +230,7 @@ int main(void){
 	for(int i=0;i<MAXN;i++){
 		v.push_back(rand()%MAXN+1);
 	}
-	
+	puts("Ordenando");
 	cudaEvent_t start, stop;
 	cudaEventCreate(&start);
 	cudaEventCreate(&stop);

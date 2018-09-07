@@ -13,11 +13,11 @@ run: clean compile
 compile:
 	@clear
 	@echo "Compilando..."
-	@gcc -Wall -o Quicksort Quicksort.c -lm -g -fopenmp	
+	@gcc -Wall -o Quicksort Quicksort.c -lm -g -fopenmp -O3
 	@echo "Secuencial creado..."		
-	@gcc -Wall -o Quicksort_Pthreads Quicksort_Pthreads.c -lm -g -fopenmp
+	@gcc -Wall -o Quicksort_Pthreads Quicksort_Pthreads.c -lm -g -fopenmp -O3
 	@echo "Pthreads creado..."	
-	@gcc -Wall -o Quicksort_OpenMP Quicksort_OpenMP.c -lm -g -fopenmp
+	@gcc -Wall -o Quicksort_OpenMP Quicksort_OpenMP.c -lm -g -fopenmp -O3
 	@echo "OpenMP creado..."	
 	@nvcc -o GPU-Quicksort GPU-Quicksort.cu
 	@echo "GPU-Quicksort creado..."		
