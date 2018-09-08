@@ -6,11 +6,11 @@
 #include <thrust/sort.h>
 #include <time.h>
 #include <unistd.h>
-#define MAXN 1000000
-#define MAXSEQ 64
-#define THRN 32
 #define MAXR(sz) (((sz)+MAXSEQ-1)/MAXSEQ+1)
 #define MAXT MAXR(MAXN)
+int MAXN;
+int MAXSEQ;
+int THRN;
 
 //===Definicion de estructuras y funciones utiles===
 
@@ -210,7 +210,6 @@ void gpuqsort(thrust::host_vector<int> & v){
 	}
 	for(int i=0;i<work.size();i++)done.push_back(work[i]);
 	lqsort(done,d);
-	
 	thrust::copy(d.begin(),d.end(),v.begin());
 	
 	d.clear();
@@ -222,7 +221,13 @@ void gpuqsort(thrust::host_vector<int> & v){
 	return;
 }
 
-int main(void){	
+int main(int argc, char *argv[]){
+	
+	if(argc!=4)return 0;
+	MAXN = atoi(argv[1]);
+	MAXSEQ = atoi(argv[2]);
+	THRN = atoi(argv[3]);
+	srand(time(0)^(getpid()));
 	
 	thrust::host_vector<int> v;
 	
@@ -230,7 +235,6 @@ int main(void){
 	for(int i=0;i<MAXN;i++){
 		v.push_back(rand()%MAXN+1);
 	}
-	puts("Ordenando");
 	cudaEvent_t start, stop;
 	cudaEventCreate(&start);
 	cudaEventCreate(&stop);
@@ -241,7 +245,7 @@ int main(void){
 	cudaEventSynchronize(stop);
 	float milliseconds = 0;
 	cudaEventElapsedTime(&milliseconds, start, stop);
-	printf("Tiempo : %f ms.\n",milliseconds);
+	printf("%.3f\n",milliseconds);
 	
 	v.clear();
 	

@@ -8,7 +8,7 @@ run: clean compile
 	@echo "OpenMP"
 	@./Quicksort_OpenMP 10000000
 	@echo "GPU-Quicksort"
-	@./GPU-Quicksort 10000000
+	@./GPU-Quicksort 10000000 32 256
 
 compile:
 	@clear
